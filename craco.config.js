@@ -10,7 +10,17 @@ module.exports = {
       '@': resolve('src'),
       components: resolve('src/components')
     },
-
+    devServer: {
+      proxy: {
+        '/dev-api': {
+          target: 'http://localhost:3000',
+          changeOrigin: true,
+          pathRewrite: {
+            '/dev-api': ''
+          }
+        }
+      }
+    },
     configure: (webpackConfig, { env, paths }) => {
       const outputDir = resolve(
         process.env.ENV === 'development' ? 'dist-test' : 'dist-prod'
