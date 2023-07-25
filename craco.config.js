@@ -21,7 +21,7 @@ module.exports = {
         }
       }
     },
-    configure: (webpackConfig, { env, paths }) => {
+    configure: (webpackConfig, { paths }) => {
       const outputDir = resolve(
         process.env.ENV === 'development' ? 'dist-test' : 'dist-prod'
       );
