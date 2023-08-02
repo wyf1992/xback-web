@@ -1,6 +1,5 @@
 const path = require('path');
 const CracoLessPlugin = require('craco-less');
-const CracoEnvPlugin = require('craco-plugin-env');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 const resolve = (dir) => path.resolve(__dirname, dir);
 
@@ -9,17 +8,6 @@ module.exports = {
     alias: {
       '@': resolve('src'),
       components: resolve('src/components')
-    },
-    devServer: {
-      proxy: {
-        '/dev-api': {
-          target: 'http://localhost:3000',
-          changeOrigin: true,
-          pathRewrite: {
-            '/dev-api': ''
-          }
-        }
-      }
     },
     configure: (webpackConfig, { paths }) => {
       const outputDir = resolve(
@@ -44,23 +32,26 @@ module.exports = {
       return webpackConfig;
     }
   },
+  devServer: {
+    proxy: {
+      '/dev-api': {
+        target: 'https://testpay.xback.io:8999/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/dev-api': ''
+        }
+      }
+    }
+  },
   plugins: [
     {
       plugin: CracoLessPlugin,
       options: {
         lessLoaderOptions: {
           lessOptions: {
-            // modifyVars: { '@primary-color': '#1DA57A' },
+            modifyVars: { '@primary-color': '#2ba245' },
             javascriptEnabled: true
           }
-        }
-      }
-    },
-    {
-      plugin: CracoEnvPlugin,
-      options: {
-        variables: {
-          BASE_API: '/dev-api'
         }
       }
     }
